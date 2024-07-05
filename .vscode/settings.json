@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./event_manager_app",
+        "./event_manager_app"
+    ]
+}

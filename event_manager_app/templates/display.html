@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title %}
+Events List
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'header.html' %}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card text-center">
+                <div class="card-header">
+                    <h2 class="h2">Event List</h2>
+                </div>
+                <div class="card-body table-responsive">
+                    <table id="event-table" class="table display">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Total Participants</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Location</th>
+                                <th>Contact Person</th>
+                                <th>Contact Number</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for obj in events %}
+                            <tr>
+                                <td><a href="#">{{ obj.title }}</a></td>
+                                <td>{{ obj.description }}</td>
+                                <td>{{ obj.total_participants }}</td>
+                                <td><a href="#">{{ obj.start_date }}</a></td>
+                                <td><a href="#">{{ obj.end_date }}</a></td>
+                                <td>{{ obj.location }}</td>
+                                <td>{{ obj.contact_person }}</td>
+                                <td>{{ obj.contact_number }}</td>
+                                <td><a href="{% url 'update_event' %}?event_id={{ obj.id }}">Edit</a></td>
+                                <td><button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#successModal" data-title="{{ obj.title }}" 
+                                   data-url="{% url 'delete_event' %}?event_id={{ obj.id }}"><a class="link-light" href="{% url 'delete_event' %}?event_id={{ obj.id }}">Delete</a></button></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item"><a href="?page=1" class="page-link">&laquo; first</a></li>
+                            <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">previous</a></li>
+                            {% endif %}
+                            <li class="page-item"><a class="page-link" href="#">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+                            {% if page_obj.has_next %}
+                            <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">next</a></li>
+                            <li class="page-item"><a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">last &raquo;</a></li>
+                            {% endif %}
+                            <button id="reset-filter" class="btn btn-dark mx-2">Reset Filter</button>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                        Success
+                </div>
+            </div>
+            <div class="modal-body">
+                    Deleted {{ title }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+
+<script>
+    $(document).ready(function() {
+       var table =  $('#event-table').DataTable({
+            "paging": false
+
+        });
+
+        $('#event-table tbody').on('click', 'td:nth-child(1)', function(){
+            var title = $(this).text().trim()
+            table.column(0).search(title).draw();
+        });
+
+        $('#event-table tbody').on('click', 'td:nth-child(4)', function(){
+            
+            var start_date = $(this).text().trim()
+            console.log("Date click garisakyo", start_date)
+            table.column(3).search(start_date).draw();
+        });
+
+        $('#event-table tbody').on('click', 'td:nth-child(5)', function(){
+            var end_date = $(this).text().trim()
+            table.column(4).search(end_date).draw();
+        });
+
+        
+        $('#reset-filter').on('click', function(){
+            
+            table.search('').columns().search('').draw();
+        });
+
+
+        
+    });
+</script>
+{% endblock %}

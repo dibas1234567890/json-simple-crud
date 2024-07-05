@@ -1,0 +1,37 @@
+{%  extends 'base.html' %}
+{% load static %}
+{% block title %}
+Successfully added
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'header.html' %}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        <div class="h2">
+            
+        </div>
+        <div class="col">
+            <a href="/"><button class="btn btn-info" >
+                Go home
+            </button></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="{% static 'images\toast.svg' %}" height="30px" class="rounded me-2" alt="...">
+      <strong class="me-auto">{{ title }} Event {{ msg }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      The event record {{ title }} was {{ msg }}.
+    </div>
+  </div>
+</div>
+{% endblock %}

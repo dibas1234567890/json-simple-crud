@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% block title %}
+Search
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'header.html' %}
+{% endif %}
+{% if form %}
+<div class="container justify-content-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-12">
+            <div class="card text-center" style="width: 100%;" >
+   
+                <div class="card-header w-100">
+                    <div class="h3 my-auto">
+                        Search for Events
+
+                    </div>
+                </div>
+            <div class="card-body d-flex form-group align-items-center justify-content-center ">
+                <form method="post" class="form h-100" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="table-responsive  ">
+
+                        <table class=" table col-lg-12  table-bordered">
+                            <tr>
+                                <th scope="col">{{ form.title.label }}</td>
+                                
+
+                            </tr>
+                            <tr>
+                                <td> {{ form.title }}</td>
+                                
+                                
+                             </tr>
+                             
+                             <tr>
+                                <td><button type="submit" class="btn btn-info">Search by title</button></td>
+                                
+                             </tr>
+                        </table>
+                    </div>
+                    
+                </form>
+                <!-- search by start date -->
+                <form method="post" class="form h-100" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="table-responsive  ">
+
+                        <table class=" table col-lg-12  table-bordered">
+                            <tr>
+                                <th scope="col">{{ form.start_dates.label }}</td>
+                                
+
+                            </tr>
+                            <tr>
+                                <td> {{ form.start_dates }}</td>
+                                
+                                
+                             </tr>
+                             
+                             <tr>
+                                <td><button type="submit" class="btn btn-info">Search by Start Date</button></td>
+                                
+                             </tr>
+                        </table>
+                    </div>
+                    
+                </form>
+                                <!-- search by start date -->
+
+                <form method="post" class="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="table-responsive  ">
+
+                        <table class=" table col-lg-12  table-bordered">
+                            <tr>
+                                <th scope="col">{{ form.end_date.label }}</td>
+                                
+
+                            </tr>
+                            <tr>
+                                <td> {{ form.end_date }}</td>
+                                
+                                
+                             </tr>
+                             
+                             <tr>
+                                <td><button type="submit" class="btn btn-info">Search by End Date</button></td>
+                                
+                             </tr>
+                        </table>
+                    </div>
+                    
+                </form>
+              
+            </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header h4 text-center">
+                    Results
+                </div>
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table id="event-table" class="table display">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>Total Participants</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Location</th>
+                                    <th>Contact Person</th>
+                                    <th>Contact Number</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{ obj.title }}</td>
+                                    <td>{{ obj.description }}</td>
+                                    <td>{{ obj.total_participants }}</td>
+                                    <td>{{ obj.start_date }}</td>
+                                    <td>{{ obj.end_date }}</td>
+                                    <td>{{ obj.location }}</td>
+                                    <td>{{ obj.contact_person }}</td>
+                                    <td>{{ obj.contact_number }}</td>
+                                    {% if obj %}
+                                    <td><a href="{% url 'update_event' %}?event_id={{ obj.id }}">Edit</a></td>
+                                    <td><a href="{% url 'delete_event' %}?event_id={{ obj.id }}">Delete</a></td>
+                                    {% endif %}
+                                </tr>
+                            </tbody>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        console.log("Document ready.");
+
+        $(".datepicker_start").datepicker({
+            dateFormat: 'dd-mm-yy',  
+            changeMonth: true,
+            changeYear: true,
+            
+        });});
+</script>
+{% endif %}
+{% endblock %}

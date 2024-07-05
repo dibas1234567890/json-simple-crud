@@ -1,0 +1,24 @@
+[
+    {
+        "contact_number": 4526391,
+        "contact_person": "Dibas Pratap Basnet",
+        "description": "dsa",
+        "end_date": "11-06-2024",
+        "id": 6,
+        "location": "Tangal, Kathmandu",
+        "start_date": "10-06-2024",
+        "title": "Neural Network for Aliens",
+        "total_participants": 47
+    },
+    {
+        "contact_number": 123456789,
+        "contact_person": "Test Person",
+        "description": "Test Description 2",
+        "end_date": "15-06-2024",
+        "id": 7,
+        "location": "Test Locaiton",
+        "start_date": "11-06-2024",
+        "title": "title 2",
+        "total_participants": 2
+    }
+]

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if user.is_authenticated %}
+    <title>Header</title>
+    {% load static %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        .nav-link {
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+   {% if not user.profile.client %}
+   <div class="container">
+    <div class="row justify-content-center">
+        <div class="mx-auto">
+            <nav class="navbar navbar-expand-lg bg-brightyellow  rounded-bottom justify-content-center" >
+               
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" >
+                    <span class="navbar-toggler-icon bg-white"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto bg-charcoal rounded">
+                        <li class="nav-item {% if request.path == '/display_all/' %}link-active{% endif %}">
+                            <a href="{% url 'display_all' %}" class="nav-link link-light bg-charcoal shadow rounded">View All Events</a>
+                        </li> 
+                        <li class="nav-item mx-auto my-auto {% if request.path == '/add_event/' %}link-active{% endif %}">
+                            <a href="{% url 'add_event' %}" class="nav-link link-light bg-charcoal shadow rounded">Add Event</a>
+                        </li>
+                        <li class="nav-item mx-auto my-auto {% if request.path == '/search-title/' %}link-active{% endif %}">
+                            <a href="{% url 'filter_title' %}" class="nav-link link-light bg-charcoal shadow rounded">Search All Events</a>
+                        </li>
+                        <li class="av-item mx-auto my-auto {% if request.path == '/logout/' %}link-active{% endif %}">
+                            <a href="{% url 'json_to_csv' %}" class="nav-link link-light bg-charcoal shadow rounded ">Download All</a>
+                        </li>
+                        <li class="av-item mx-auto my-auto {% if request.path == '/logout/' %}link-active{% endif %}">
+                            <a href="{% url 'logout' %}" class="nav-link link-light bg-charcoal shadow rounded ">Logout</a>
+                        </li>
+                        
+                        
+                        
+                       
+                        
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endif %}
+</body>
+</html>

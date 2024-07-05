@@ -1,0 +1,77 @@
+
+
+{% extends 'base.html' %}
+{% block title %}
+Login
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'header.html' %}
+{% endif %}
+{% if user.is_authenticated %}
+
+<div class="container ">
+    <div class="row">
+        <div class="col-12">
+           <div class="card">
+            <div class="card-title">
+                <div class="h3 text-center mt-2">{{ user }}, You Are Logged In</div>
+            </div>
+           </div>
+        </div>
+    </div>
+</div>
+{% elif form %}
+<div class="container d-flex align-items-center justify-content-center min-vh-100 ">
+    <div class="row  justify-content-center">
+        <div class="col-12">
+            <div class="card text-center">
+   
+                <div class="card-header h3">
+                    {{ msg }}
+                </div>
+            <div class="card-body form-group align-items-center">
+                <form id="login_form" method="post" class="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <table class=" table table-responsive ">
+                        <tr>
+                            <td>{{ field.label }}
+                            {{ field }}</td>
+                        </tr>
+                    </table>
+                    {% endfor %}
+                    
+                    <button type="submit" class="btn btn-info">Submit</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+        console.log("doc ready.");
+
+        $('#login_form').submit(function(event) {
+            event.preventDefault();
+            
+            console.log("Validation started.");
+            var username = $('#id_username').val(); 
+            if (username.trim() === '') {
+                console.log("If condition is true. Validation failed.");
+                return false; 
+            } else {
+                console.log("Validation passed.");
+                this.submit()
+                return true;
+            }
+        });
+    });
+</script>
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}
+Add Event
+{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'header.html' %}
+{% endif %}
+{% if form %}
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<div class="container justify-content-center">
+    <div class="row justify-content-center">
+        <div class="col-lg-12 col-md-12">
+            <div class="card text-center" style="width: 100%;" >
+                <div class="card-header w-100">
+                    <div class="h3">Add Events</div>
+                </div>
+                <div class="card-body d-flex form-group align-items-center justify-content-center ">
+                    <form id="event_add_form" method="post" class="form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="table-responsive ">
+                            <table class="col-lg-12 ">
+                                <tr>
+                                    <th scope="col">{{ field.label }}:</th>
+                                </tr>
+                                <tr>
+                                    <td>{{ field }}</td>
+                                </tr>
+                               <!--<div class="h3">{{ field.errors }}</div>-->
+                            </table>
+                        </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-info mt-2">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(document).ready(function() {
+        console.log("Document ready.");
+
+        $(".datepicker_start").datepicker({
+            dateFormat: 'dd-mm-yy',  
+            changeMonth: true,
+            changeYear: true,
+            
+        });
+        
+        $('#id_start_date').datepicker({
+        dateFormat: 'dd-mm-yy', 
+        onSelect: function(dateText, inst){
+                $('#id_end_date').datepicker('option', 'minDate', new Date(dateText))
+            }
+    })
+
+        $('#event_add_form').submit(function(event) {
+            event.preventDefault();
+            var number = parseInt($('#id_contact_number').val()); 
+
+            if (number < 999999) {
+                alert("phone number is less than 7 digits");
+                return false; 
+            } else {
+                console.log("Validation bhayo.");
+                this.submit()
+                return true;
+            }
+        });
+    });
+
+    
+</script>
+
+
+
+
+{% endblock %}

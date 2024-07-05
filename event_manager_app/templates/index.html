@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if user.is_authenticated %}
+{% include 'header.html' %}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-title">
+                    <div class="h3 text-center my-auto">
+                        Welcome, {{ user }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
